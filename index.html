@@ -1,0 +1,1007 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Escala de Suporte — Gplus Sistemas</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ── THEMES ───────────────────────────────────────────────────── */
+:root {
+  --orange:      #E8610A;
+  --orange-lt:   #F47C2B;
+  --orange-dk:   #C04F06;
+  --orange-pale: #FDE8D6;
+}
+
+[data-theme="light"] {
+  --bg:       #FDF4EE;
+  --surface:  #FFFFFF;
+  --surface2: #FEF0E6;
+  --border:   #F5D5BE;
+  --text:     #2D1A0E;
+  --muted:    #A0714F;
+  --header-gradient: linear-gradient(135deg,#E8610A 0%,#F47C2B 60%,#FBA76A 100%);
+  --week-header-bg: linear-gradient(90deg,#FEF0E6 0%,#fff 100%);
+  --tag-com-bg:  #FDE8D6; --tag-com-txt:  #B84F00;
+  --tag-pla-bg:  #2D1A0E; --tag-pla-txt:  #F47C2B;
+  --tag-esc-bg:  #C04F06; --tag-esc-txt:  #FFFFFF;
+  --tag-fol-bg:  #F5D5BE; --tag-fol-txt:  #A0714F;
+  --icon-com:    #FDE8D6;
+  --icon-pla:    #2D1A0E;
+  --icon-esc:    #C04F06;
+  --shadow:      rgba(232,97,10,0.08);
+  --shadow-hover:rgba(232,97,10,0.16);
+  --modal-bg:    rgba(45,26,14,0.55);
+  --inp-bg:      #FEF0E6;
+}
+
+[data-theme="dark"] {
+  --bg:       #121212;
+  --surface:  #1E1E1E;
+  --surface2: #272727;
+  --border:   #3A2E28;
+  --text:     #F2E8DF;
+  --muted:    #9E7E68;
+  --header-gradient: linear-gradient(135deg,#7A3005 0%,#B84F00 60%,#C04F06 100%);
+  --week-header-bg: linear-gradient(90deg,#1E1E1E 0%,#272727 100%);
+  --tag-com-bg:  #3A2010; --tag-com-txt:  #F9A06A;
+  --tag-pla-bg:  #1A0D05; --tag-pla-txt:  #F47C2B;
+  --tag-esc-bg:  #5A2800; --tag-esc-txt:  #FFD0A8;
+  --tag-fol-bg:  #2A2020; --tag-fol-txt:  #7A6056;
+  --icon-com:    #3A2010;
+  --icon-pla:    #1A0D05;
+  --icon-esc:    #5A2800;
+  --shadow:      rgba(0,0,0,0.3);
+  --shadow-hover:rgba(0,0,0,0.5);
+  --modal-bg:    rgba(0,0,0,0.7);
+  --inp-bg:      #272727;
+}
+
+/* ── RESET ───────────────────────────────────────────────────── */
+*{box-sizing:border-box;margin:0;padding:0}
+
+body{
+  background:var(--bg);color:var(--text);
+  font-family:'Nunito',sans-serif;min-height:100vh;
+  transition:background .3s,color .3s;
+}
+
+body::before{
+  content:'';position:fixed;top:0;left:0;right:0;height:260px;
+  background:var(--header-gradient);z-index:0;
+  transition:background .3s;
+}
+
+.app{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:0 24px 48px}
+
+/* ── HEADER ──────────────────────────────────────────────────── */
+header{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:26px 0 32px;flex-wrap:wrap;gap:14px;
+}
+
+.brand{display:flex;align-items:center;gap:16px}
+
+.brand-logo{
+  width:72px;height:72px;border-radius:18px;
+  background:rgba(255,255,255,0.2);backdrop-filter:blur(6px);
+  border:2px solid rgba(255,255,255,0.4);
+  overflow:hidden;display:flex;align-items:center;justify-content:center;padding:4px;
+}
+.brand-logo img{width:100%;height:100%;object-fit:contain;border-radius:12px}
+
+.brand-text h1{
+  font-size:clamp(22px,4vw,38px);font-weight:900;color:#fff;
+  letter-spacing:-.5px;line-height:1;text-shadow:0 2px 8px rgba(0,0,0,.2);
+}
+.brand-text p{font-family:'DM Mono',monospace;font-size:13px;color:rgba(255,255,255,.75);margin-top:5px}
+
+.header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+
+/* month nav */
+.month-nav{
+  display:flex;align-items:center;gap:6px;
+  background:rgba(255,255,255,.2);backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,.35);border-radius:12px;padding:8px 14px;
+}
+.month-nav button{
+  background:none;border:none;color:rgba(255,255,255,.8);cursor:pointer;
+  font-size:22px;line-height:1;transition:color .2s;padding:0 6px;
+}
+.month-nav button:hover{color:#fff}
+.month-nav span{
+  font-family:'DM Mono',monospace;font-size:14px;font-weight:500;color:#fff;
+  min-width:160px;text-align:center;text-transform:uppercase;letter-spacing:1px;
+}
+
+/* buttons */
+.btn{
+  background:#fff;color:var(--orange);border:none;border-radius:10px;
+  padding:11px 20px;font-family:'Nunito',sans-serif;font-size:14px;font-weight:800;
+  cursor:pointer;transition:all .2s;letter-spacing:.3px;
+  box-shadow:0 2px 8px rgba(0,0,0,.12);white-space:nowrap;
+}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.18)}
+.btn:active{transform:translateY(0)}
+
+.btn-outline{background:transparent;color:var(--orange);border:2px solid var(--orange);box-shadow:none}
+.btn-outline:hover{background:var(--orange-pale);box-shadow:none}
+
+.btn-ghost-white{
+  background:transparent;color:#fff;border:2px solid rgba(255,255,255,.55);box-shadow:none;
+}
+.btn-ghost-white:hover{background:rgba(255,255,255,.15);box-shadow:none}
+
+/* dark toggle */
+.dark-toggle{
+  width:42px;height:42px;border-radius:10px;border:2px solid rgba(255,255,255,.55);
+  background:transparent;color:#fff;cursor:pointer;font-size:20px;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;flex-shrink:0;
+}
+.dark-toggle:hover{background:rgba(255,255,255,.15)}
+
+/* ── STATS ───────────────────────────────────────────────────── */
+.stats-bar{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:12px;margin-bottom:22px;
+}
+.stat-card{
+  background:var(--surface);border:1.5px solid var(--border);border-radius:16px;
+  padding:16px 20px;box-shadow:0 2px 12px var(--shadow);transition:background .3s,border-color .3s;
+}
+.stat-label{font-family:'DM Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:6px}
+.stat-value{font-size:26px;font-weight:900;color:var(--orange)}
+
+/* ── LEGEND ──────────────────────────────────────────────────── */
+.legend{
+  display:flex;gap:18px;flex-wrap:wrap;margin-bottom:20px;
+  background:var(--surface);border:1.5px solid var(--border);border-radius:12px;
+  padding:12px 20px;box-shadow:0 2px 8px var(--shadow);
+  transition:background .3s,border-color .3s;
+}
+.legend-item{display:flex;align-items:center;gap:7px;font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.4px}
+.legend-dot{width:11px;height:11px;border-radius:3px;flex-shrink:0}
+.dot-com{background:var(--orange)}
+.dot-pla{background:var(--text)}
+.dot-esc{background:var(--orange-dk)}
+.dot-fol{background:var(--muted)}
+
+/* ── WEEK SECTION ────────────────────────────────────────────── */
+.week-section{
+  background:var(--surface);border:1.5px solid var(--border);border-radius:18px;
+  margin-bottom:18px;overflow:hidden;
+  box-shadow:0 3px 14px var(--shadow);transition:box-shadow .2s,border-color .2s,background .3s;
+}
+.week-section:hover{border-color:var(--orange-lt);box-shadow:0 6px 24px var(--shadow-hover)}
+
+.week-header{
+  display:flex;align-items:center;justify-content:space-between;padding:14px 20px;
+  background:var(--week-header-bg);border-bottom:1.5px solid var(--border);
+  cursor:pointer;user-select:none;transition:background .3s,border-color .3s;
+}
+.week-title{display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.week-badge{
+  font-family:'DM Mono',monospace;font-size:11px;color:#fff;background:var(--orange);
+  border-radius:7px;padding:3px 11px;text-transform:uppercase;letter-spacing:.5px;
+}
+.week-title h3{font-size:17px;font-weight:800;color:var(--text)}
+.week-title .week-dates{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)}
+.week-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.week-toggle{font-size:16px;color:var(--muted);transition:transform .3s;flex-shrink:0}
+.week-section.collapsed .week-toggle{transform:rotate(-90deg)}
+.week-body{padding:20px;display:grid;gap:18px}
+.week-section.collapsed .week-body{display:none}
+
+/* ── DAYS GRID ───────────────────────────────────────────────── */
+.days-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:10px}
+
+.day-card{
+  background:var(--surface2);border:1.5px solid var(--border);border-radius:14px;
+  padding:14px 12px;cursor:pointer;min-height:155px;display:flex;flex-direction:column;
+  transition:border-color .2s,transform .15s,box-shadow .2s,background .3s;
+  position:relative;
+}
+.day-card:hover{border-color:var(--orange);transform:translateY(-3px);box-shadow:0 8px 20px var(--shadow-hover)}
+.day-card.today{border-color:var(--orange);border-width:2px}
+.day-card.today::after{
+  content:'hoje';position:absolute;top:8px;right:8px;
+  font-family:'DM Mono',monospace;font-size:9px;color:var(--orange);
+  background:var(--orange-pale);border-radius:4px;padding:1px 6px;text-transform:uppercase;
+}
+.day-label{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:3px}
+.day-number{font-size:30px;font-weight:900;color:var(--text);margin-bottom:8px;line-height:1}
+.day-shifts{display:flex;flex-direction:column;gap:5px;flex:1}
+
+.shift-tag{
+  font-family:'DM Mono',monospace;font-size:11px;font-weight:500;
+  border-radius:6px;padding:4px 8px;letter-spacing:.2px;line-height:1.35;
+  word-break:break-word;
+}
+.tag-com{background:var(--tag-com-bg);color:var(--tag-com-txt)}
+.tag-pla{background:var(--tag-pla-bg);color:var(--tag-pla-txt)}
+.tag-esc{background:var(--tag-esc-bg);color:var(--tag-esc-txt)}
+.tag-fol{background:var(--tag-fol-bg);color:var(--tag-fol-txt);font-style:italic}
+.day-note{margin-top:5px;font-size:10px;color:var(--muted);font-family:'DM Mono',monospace}
+
+/* ── SUMMARY BLOCKS ──────────────────────────────────────────── */
+.summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+
+.shift-block{background:var(--surface2);border:1.5px solid var(--border);border-radius:14px;padding:18px;transition:background .3s,border-color .3s}
+.shift-block-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap;gap:8px}
+.shift-block-title{display:flex;align-items:center;gap:10px}
+.shift-icon{width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.si-com{background:var(--icon-com)}
+.si-pla{background:var(--icon-pla)}
+.si-esc{background:var(--icon-esc)}
+.shift-block-title h4{font-size:15px;font-weight:800;color:var(--text)}
+.shift-block-title p{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)}
+
+.member-chips{display:flex;flex-wrap:wrap;gap:7px}
+.chip{
+  display:flex;align-items:center;gap:7px;background:var(--surface);
+  border:1.5px solid var(--border);border-radius:20px;padding:5px 13px 5px 7px;
+  font-size:13px;font-weight:700;color:var(--text);
+  transition:border-color .2s,background .2s;
+}
+.chip-avatar{width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0}
+
+/* ── MODAL ───────────────────────────────────────────────────── */
+.overlay{
+  position:fixed;inset:0;background:var(--modal-bg);backdrop-filter:blur(6px);
+  z-index:100;display:flex;align-items:center;justify-content:center;padding:20px;
+  opacity:0;pointer-events:none;transition:opacity .2s;
+}
+.overlay.open{opacity:1;pointer-events:all}
+.modal{
+  background:var(--surface);border:1.5px solid var(--border);border-radius:22px;
+  padding:28px;width:100%;max-width:560px;
+  transform:translateY(12px);transition:transform .2s,background .3s;
+  max-height:92vh;overflow-y:auto;
+  box-shadow:0 20px 60px rgba(0,0,0,.25);
+}
+.overlay.open .modal{transform:translateY(0)}
+.modal-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px;padding-bottom:16px;border-bottom:1.5px solid var(--border)}
+.modal-hdr h2{font-size:20px;font-weight:900;color:var(--text)}
+.modal-close{
+  background:var(--surface2);border:1.5px solid var(--border);color:var(--muted);
+  border-radius:8px;width:34px;height:34px;cursor:pointer;font-size:20px;
+  display:flex;align-items:center;justify-content:center;transition:color .2s,border-color .2s;
+}
+.modal-close:hover{color:var(--orange);border-color:var(--orange)}
+
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-group{margin-bottom:18px}
+.form-label{display:block;font-family:'DM Mono',monospace;font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);margin-bottom:8px}
+.form-input,.form-select,.form-textarea{
+  width:100%;background:var(--inp-bg);border:1.5px solid var(--border);border-radius:10px;
+  padding:10px 14px;color:var(--text);font-family:'Nunito',sans-serif;font-size:15px;font-weight:600;
+  outline:none;transition:border-color .2s,background .3s;appearance:none;resize:vertical;
+}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--orange)}
+
+.checkbox-group{display:flex;flex-wrap:wrap;gap:8px}
+.cb-item{
+  display:flex;align-items:center;gap:6px;background:var(--inp-bg);border:1.5px solid var(--border);
+  border-radius:9px;padding:7px 14px;cursor:pointer;font-size:14px;font-weight:700;
+  color:var(--text);user-select:none;transition:border-color .2s,background .2s;
+}
+.cb-item input{display:none}
+.cb-item.checked{border-color:var(--orange);background:var(--orange-pale);color:var(--orange-dk)}
+[data-theme="dark"] .cb-item.checked{background:#3A2010;color:#F9A06A}
+
+.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:20px;padding-top:18px;border-top:1.5px solid var(--border)}
+
+/* alternation */
+.alt-row{display:flex;align-items:center;gap:10px;margin-bottom:7px}
+.alt-day{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;min-width:105px}
+.alt-select{
+  background:var(--inp-bg);border:1.5px solid var(--border);border-radius:8px;
+  padding:6px 12px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;
+  outline:none;cursor:pointer;transition:border-color .2s;appearance:none;min-width:160px;
+}
+.alt-select:focus{border-color:var(--orange)}
+
+/* members manager */
+.members-list{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.member-row{display:flex;align-items:center;gap:8px}
+.member-row input{flex:1;background:var(--inp-bg);border:1.5px solid var(--border);border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Nunito',sans-serif;font-size:14px;font-weight:600;outline:none;transition:border-color .2s}
+.member-row input:focus{border-color:var(--orange)}
+.member-row .color-pick{width:36px;height:36px;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;background:none;padding:2px;flex-shrink:0}
+.member-row .del-btn{background:none;border:none;color:var(--muted);cursor:pointer;font-size:18px;padding:4px;transition:color .2s;flex-shrink:0}
+.member-row .del-btn:hover{color:#e05e7c}
+
+/* day modal tabs */
+.day-tabs{display:flex;gap:6px;margin-bottom:18px;flex-wrap:wrap}
+.day-tab{
+  background:var(--inp-bg);border:1.5px solid var(--border);border-radius:9px;
+  padding:6px 14px;font-size:13px;font-weight:700;color:var(--muted);cursor:pointer;
+  transition:all .2s;
+}
+.day-tab.active{border-color:var(--orange);background:var(--orange-pale);color:var(--orange-dk)}
+[data-theme="dark"] .day-tab.active{background:#3A2010;color:#F9A06A}
+
+/* toast */
+.toast{
+  position:fixed;bottom:24px;right:24px;background:var(--orange);color:#fff;
+  border-radius:12px;padding:13px 22px;font-size:14px;font-weight:700;z-index:200;
+  transform:translateY(60px);opacity:0;transition:all .3s;
+  font-family:'DM Mono',monospace;box-shadow:0 6px 20px rgba(232,97,10,.35);
+}
+.toast.show{transform:translateY(0);opacity:1}
+
+/* empty */
+.no-weeks{
+  text-align:center;padding:70px 20px;background:var(--surface);
+  border:1.5px dashed var(--border);border-radius:18px;
+  color:var(--muted);font-family:'DM Mono',monospace;font-size:15px;
+  transition:background .3s,border-color .3s;
+}
+.no-weeks .no-icon{font-size:48px;margin-bottom:14px}
+
+/* ── RESPONSIVE ──────────────────────────────────────────────── */
+@media(max-width:900px){.days-grid{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:600px){
+  .days-grid{grid-template-columns:repeat(2,1fr)}
+  header{flex-direction:column;align-items:flex-start}
+  body::before{height:200px}
+}
+
+/* scrollbar */
+::-webkit-scrollbar{width:6px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- HEADER -->
+<header>
+  <div class="brand">
+    <div class="brand-logo"><img id="logoImg" src="" alt="Gplus"></div>
+    <div class="brand-text">
+      <h1>Escala de Suporte</h1>
+      <p id="brandSub">// Gplus Sistemas · gerenciamento de plantões</p>
+    </div>
+  </div>
+  <div class="header-actions">
+    <div class="month-nav">
+      <button onclick="changeMonth(-1)">‹</button>
+      <span id="monthLabel">—</span>
+      <button onclick="changeMonth(1)">›</button>
+    </div>
+    <button class="btn btn-ghost-white" onclick="openModal('members')">👥 Membros</button>
+    <button class="btn btn-ghost-white" onclick="openModal('week')">+ Semana</button>
+    <button class="dark-toggle" id="darkToggle" onclick="toggleDark()" title="Alternar tema">🌙</button>
+  </div>
+</header>
+
+<!-- STATS -->
+<div class="stats-bar" id="statsBar"></div>
+
+<!-- LEGEND -->
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot dot-com"></div>Horário Comercial</div>
+  <div class="legend-item"><div class="legend-dot dot-pla"></div>Plantão Alternado</div>
+  <div class="legend-item"><div class="legend-dot dot-esc"></div>Plantão Escalado</div>
+  <div class="legend-item"><div class="legend-dot dot-fol"></div>Folga / Sem escala</div>
+</div>
+
+<!-- WEEKS -->
+<div id="weeksContainer"></div>
+</div>
+
+<!-- ═══ MODAL NOVA SEMANA ═══════════════════════════════════════ -->
+<div class="overlay" id="weekModal">
+<div class="modal">
+  <div class="modal-hdr">
+    <h2>📅 Nova Semana</h2>
+    <button class="modal-close" onclick="closeModal('week')">×</button>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Período</label>
+    <div class="form-row">
+      <input type="date" class="form-input" id="wkStart">
+      <input type="date" class="form-input" id="wkEnd">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">☀ Horário Comercial — dias úteis</label>
+    <div class="checkbox-group" id="wkComercial"></div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">🌙 Plantão Alternado Seg–Qui (2+ membros)</label>
+    <div class="checkbox-group" id="wkPlantao"></div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">⚡ Plantão Escalado Sex / Sáb / Dom</label>
+    <div class="checkbox-group" id="wkEscalado"></div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Observação da semana (opcional)</label>
+    <input type="text" class="form-input" id="wkNote" placeholder="ex: semana de feriado...">
+  </div>
+  <div class="modal-actions">
+    <button class="btn btn-outline" onclick="closeModal('week')">Cancelar</button>
+    <button class="btn" onclick="saveWeek()">Salvar Semana</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ MODAL ALTERNÂNCIA ════════════════════════════════════════ -->
+<div class="overlay" id="altModal">
+<div class="modal">
+  <div class="modal-hdr">
+    <h2>🔄 Alternância de Plantão</h2>
+    <button class="modal-close" onclick="closeModal('alt')">×</button>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:18px;font-family:'DM Mono',monospace">
+    Defina quem fica no plantão em cada dia (Seg–Qui).
+  </p>
+  <div id="altGrid"></div>
+  <div class="modal-actions">
+    <button class="btn btn-outline" onclick="closeModal('alt')">Cancelar</button>
+    <button class="btn" onclick="saveAlt()">Confirmar</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ MODAL EDITAR DIA ═════════════════════════════════════════ -->
+<div class="overlay" id="dayModal">
+<div class="modal">
+  <div class="modal-hdr">
+    <h2 id="dayModalTitle">Editar Dia</h2>
+    <button class="modal-close" onclick="closeModal('day')">×</button>
+  </div>
+  <div id="dayModalBody"></div>
+  <div class="modal-actions">
+    <button class="btn btn-outline" onclick="closeModal('day')">Fechar</button>
+    <button class="btn" onclick="saveDay()">Salvar</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ MODAL GERENCIAR MEMBROS ══════════════════════════════════ -->
+<div class="overlay" id="membersModal">
+<div class="modal">
+  <div class="modal-hdr">
+    <h2>👥 Gerenciar Membros</h2>
+    <button class="modal-close" onclick="closeModal('members')">×</button>
+  </div>
+  <p style="font-size:13px;color:var(--muted);margin-bottom:18px;font-family:'DM Mono',monospace">
+    Adicione, renomeie ou remova membros do time. As cores são exibidas nos avatares.
+  </p>
+  <div class="members-list" id="membersList"></div>
+  <button class="btn btn-outline" style="width:100%;margin-bottom:4px" onclick="addMember()">+ Adicionar membro</button>
+  <div class="modal-actions">
+    <button class="btn btn-outline" onclick="closeModal('members')">Cancelar</button>
+    <button class="btn" onclick="saveMembers()">Salvar</button>
+  </div>
+</div>
+</div>
+
+<!-- ═══ MODAL EDITAR SEMANA ══════════════════════════════════════ -->
+<div class="overlay" id="editWeekModal">
+<div class="modal">
+  <div class="modal-hdr">
+    <h2>✏️ Editar Semana</h2>
+    <button class="modal-close" onclick="closeModal('editWeek')">×</button>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Período</label>
+    <div class="form-row">
+      <input type="date" class="form-input" id="ewStart">
+      <input type="date" class="form-input" id="ewEnd">
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">☀ Horário Comercial — dias úteis</label>
+    <div class="checkbox-group" id="ewComercial"></div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">🌙 Plantão Alternado Seg–Qui</label>
+    <div class="checkbox-group" id="ewPlantao"></div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">⚡ Plantão Escalado Sex / Sáb / Dom</label>
+    <div class="checkbox-group" id="ewEscalado"></div>
+  </div>
+  <div class="form-group">
+    <label class="form-label">Observação da semana (opcional)</label>
+    <input type="text" class="form-input" id="ewNote" placeholder="ex: semana de feriado...">
+  </div>
+  <div class="modal-actions">
+    <button class="btn btn-outline" onclick="closeModal('editWeek')">Cancelar</button>
+    <button class="btn" onclick="saveEditWeek()">Salvar Alterações</button>
+  </div>
+</div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── LOGO ──────────────────────────────────────────────────────────────────
+document.getElementById('logoImg').src='data:image/jpeg;base64,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';
+
+// ── STATE ─────────────────────────────────────────────────────────────────
+const KEY_WEEKS   = 'gplus_weeks_v3';
+const KEY_MEMBERS = 'gplus_members_v3';
+const KEY_DARK    = 'gplus_dark';
+
+const DEFAULT_MEMBERS = [
+  {id:'eduardo',    name:'Eduardo',    color:'#E8610A'},
+  {id:'guilhermeb', name:'Gui. Bueno', color:'#7A3000'},
+  {id:'manu',       name:'Manu',       color:'#B84F00'},
+  {id:'yuri',       name:'Yuri',       color:'#C04F06'},
+  {id:'will',       name:'Will',       color:'#F47C2B'},
+];
+
+let members = JSON.parse(localStorage.getItem(KEY_MEMBERS) || 'null') || DEFAULT_MEMBERS.map(m=>({...m}));
+let weeks   = JSON.parse(localStorage.getItem(KEY_WEEKS)   || '[]');
+let isDark  = localStorage.getItem(KEY_DARK) === 'true';
+
+let curMonth = new Date().getMonth();
+let curYear  = new Date().getFullYear();
+
+let editingDay    = null;  // {weekId, date}
+let editingWeekId = null;  // for alt modal
+let editWeekId    = null;  // for editWeek modal
+let tempMembers   = [];    // staging for members modal
+
+const DAYS_PT   = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+const MONTHS_PT = ['Janeiro','Fevereiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const MONTHS_REAL = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+
+const $  = id => document.getElementById(id);
+const uid= () => Math.random().toString(36).slice(2,9);
+
+function save() {
+  localStorage.setItem(KEY_WEEKS,   JSON.stringify(weeks));
+  localStorage.setItem(KEY_MEMBERS, JSON.stringify(members));
+}
+
+function fmt(d){ const [y,m,dd]=d.split('-'); return `${dd}/${m}`; }
+
+function dateRange(s,e){
+  const out=[]; let cur=new Date(s+'T00:00:00'), last=new Date(e+'T00:00:00');
+  while(cur<=last){out.push(cur.toISOString().slice(0,10));cur.setDate(cur.getDate()+1);}
+  return out;
+}
+
+function dow(d){ return new Date(d+'T00:00:00').getDay(); }
+function isWeekend(d){ const w=dow(d); return w===0||w===6; }
+function isFriday(d){ return dow(d)===5; }
+function isToday(d){ return d===new Date().toISOString().slice(0,10); }
+
+function getMember(id){ return members.find(m=>m.id===id)||{name:id,color:'#999',id}; }
+
+function showToast(msg){
+  const t=$('toast'); t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
+}
+
+// ── DARK MODE ─────────────────────────────────────────────────────────────
+function applyTheme(){
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  $('darkToggle').textContent = isDark ? '☀️' : '🌙';
+}
+
+function toggleDark(){
+  isDark=!isDark;
+  localStorage.setItem(KEY_DARK, isDark);
+  applyTheme();
+}
+
+// ── MODALS ────────────────────────────────────────────────────────────────
+function openModal(id){ $(`${id}Modal`).classList.add('open'); }
+function closeModal(id){ $(`${id}Modal`).classList.remove('open'); }
+
+window.onclick = e => {
+  ['week','alt','day','members','editWeek'].forEach(id=>{
+    const el=$(`${id}Modal`);
+    if(el && e.target===el) el.classList.remove('open');
+  });
+};
+
+// ── CHECKBOX GROUP BUILDER ────────────────────────────────────────────────
+function buildCheckGroup(containerId, selectedIds=[]){
+  const el=$(containerId); el.innerHTML='';
+  members.forEach(m=>{
+    const label=document.createElement('label');
+    label.className='cb-item'+(selectedIds.includes(m.id)?' checked':'');
+    label.dataset.id=m.id;
+    label.innerHTML=`<input type="checkbox" value="${m.id}" ${selectedIds.includes(m.id)?'checked':''}> ${m.name}`;
+    label.onclick=()=>{ label.classList.toggle('checked'); label.querySelector('input').checked=label.classList.contains('checked'); };
+    el.appendChild(label);
+  });
+}
+
+function getChecked(containerId){
+  return [...document.querySelectorAll(`#${containerId} .cb-item.checked`)].map(e=>e.dataset.id);
+}
+
+// ── WEEK MODAL ────────────────────────────────────────────────────────────
+function openWeekModal(){
+  buildCheckGroup('wkComercial', members.map(m=>m.id));
+  buildCheckGroup('wkPlantao', members.filter((_,i)=>i>=3).map(m=>m.id));
+  buildCheckGroup('wkEscalado', members.filter((_,i)=>i>=3).map(m=>m.id));
+  $('wkNote').value='';
+  openModal('week');
+}
+
+function saveWeek(){
+  const s=$('wkStart').value, e=$('wkEnd').value;
+  if(!s||!e){ showToast('Informe o período'); return; }
+  if(s>e){ showToast('Data inicial deve ser antes da final'); return; }
+
+  const com=getChecked('wkComercial');
+  const pla=getChecked('wkPlantao');
+  const esc=getChecked('wkEscalado');
+  const note=$('wkNote').value.trim();
+
+  const allDates=dateRange(s,e);
+  const days={};
+  allDates.forEach(d=>{
+    const we=isWeekend(d), fri=isFriday(d);
+    days[d]={
+      comercial: !we ? com : [],
+      escalado:  (fri||we) ? esc : [],
+      note: '',
+    };
+  });
+
+  const week={id:uid(),start:s,end:e,comercial:com,plantaoMembers:pla,escaladoMembers:esc,note,days,alt:{},collapsed:false};
+  weeks.push(week);
+  save(); closeModal('week'); render();
+  showToast('✅ Semana criada!');
+  setTimeout(()=>openAltModal(week.id),350);
+}
+
+// ── EDIT WEEK MODAL ───────────────────────────────────────────────────────
+function openEditWeek(weekId){
+  const w=weeks.find(x=>x.id===weekId); if(!w) return;
+  editWeekId=weekId;
+  $('ewStart').value=w.start;
+  $('ewEnd').value=w.end;
+  $('ewNote').value=w.note||'';
+  buildCheckGroup('ewComercial', w.comercial||[]);
+  buildCheckGroup('ewPlantao',   w.plantaoMembers||[]);
+  buildCheckGroup('ewEscalado',  w.escaladoMembers||[]);
+  openModal('editWeek');
+}
+
+function saveEditWeek(){
+  const w=weeks.find(x=>x.id===editWeekId); if(!w) return;
+  const s=$('ewStart').value, e=$('ewEnd').value;
+  if(!s||!e){ showToast('Informe o período'); return; }
+
+  // Rebuild days for new range
+  const com=getChecked('ewComercial');
+  const pla=getChecked('ewPlantao');
+  const esc=getChecked('ewEscalado');
+
+  const allDates=dateRange(s,e);
+  const newDays={};
+  allDates.forEach(d=>{
+    const we=isWeekend(d), fri=isFriday(d);
+    newDays[d]=w.days[d]||{
+      comercial: !we ? com : [],
+      escalado:  (fri||we) ? esc : [],
+      note:'',
+    };
+    if(!we) newDays[d].comercial=w.days[d]?.comercial??com;
+    if(fri||we) newDays[d].escalado=w.days[d]?.escalado??esc;
+  });
+
+  w.start=s; w.end=e; w.note=$('ewNote').value.trim();
+  w.comercial=com; w.plantaoMembers=pla; w.escaladoMembers=esc;
+  w.days=newDays;
+
+  save(); closeModal('editWeek'); render();
+  showToast('✅ Semana atualizada!');
+}
+
+// ── ALTERNATION MODAL ─────────────────────────────────────────────────────
+function openAltModal(weekId){
+  const w=weeks.find(x=>x.id===weekId); if(!w) return;
+  editingWeekId=weekId;
+  const grid=$('altGrid'); grid.innerHTML='';
+  const pla=w.plantaoMembers||[];
+  if(!pla.length){ showToast('Nenhum membro de plantão definido.'); return; }
+
+  const monThu=dateRange(w.start,w.end).filter(d=>{ const v=dow(d); return v>=1&&v<=4; });
+  monThu.forEach((d,i)=>{
+    const def=w.alt[d]||pla[i%pla.length];
+    const row=document.createElement('div'); row.className='alt-row';
+    row.innerHTML=`
+      <span class="alt-day">${DAYS_PT[dow(d)]} ${fmt(d)}</span>
+      <select class="alt-select" data-date="${d}">
+        <option value="">— Ninguém —</option>
+        ${pla.map(id=>{ const m=getMember(id); return `<option value="${id}" ${def===id?'selected':''}>${m.name}</option>`; }).join('')}
+        ${members.filter(m=>!pla.includes(m.id)).map(m=>`<option value="${m.id}" ${def===m.id?'selected':''}>${m.name} *</option>`).join('')}
+      </select>`;
+    grid.appendChild(row);
+  });
+
+  openModal('alt');
+}
+
+function saveAlt(){
+  const w=weeks.find(x=>x.id===editingWeekId); if(!w) return;
+  document.querySelectorAll('#altGrid .alt-select').forEach(sel=>{
+    w.alt[sel.dataset.date]=sel.value;
+  });
+  save(); closeModal('alt'); render(); showToast('✅ Alternância salva!');
+}
+
+// ── DAY MODAL ─────────────────────────────────────────────────────────────
+function openDayModal(weekId, date){
+  const w=weeks.find(x=>x.id===weekId); if(!w||!w.days[date]) return;
+  editingDay={weekId,date};
+  const day=w.days[date];
+  const d=dow(date), we=isWeekend(date), fri=isFriday(date);
+
+  $('dayModalTitle').textContent=`${DAYS_PT[d]}, ${fmt(date)}`;
+  const body=$('dayModalBody'); body.innerHTML='';
+
+  // Tabs
+  const tabs=['Comercial','Plantão','Escalado','Nota'];
+  const tabBar=document.createElement('div'); tabBar.className='day-tabs';
+  tabs.forEach((t,i)=>{
+    const btn=document.createElement('button');
+    btn.className='day-tab'+(i===0?' active':'');
+    btn.textContent=t; btn.dataset.tab=i;
+    btn.onclick=()=>{ document.querySelectorAll('.day-tab').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); showTab(i,w,day,date); };
+    tabBar.appendChild(btn);
+  });
+  body.appendChild(tabBar);
+
+  const content=document.createElement('div'); content.id='dayTabContent'; body.appendChild(content);
+  showTab(0,w,day,date);
+  openModal('day');
+}
+
+function showTab(i,w,day,date){
+  const c=$('dayTabContent'); c.innerHTML='';
+  const we=isWeekend(date), fri=isFriday(date);
+
+  if(i===0){ // Comercial
+    if(we){ c.innerHTML='<p style="color:var(--muted);font-family:\'DM Mono\',monospace;font-size:13px">Fim de semana — sem horário comercial.</p>'; return; }
+    const div=document.createElement('div'); div.className='checkbox-group'; div.id='dCom';
+    members.forEach(m=>{
+      const l=document.createElement('label');
+      l.className='cb-item'+(day.comercial.includes(m.id)?' checked':'');
+      l.dataset.id=m.id;
+      l.innerHTML=`<input type="checkbox" value="${m.id}" ${day.comercial.includes(m.id)?'checked':''}> ${m.name}`;
+      l.onclick=()=>{ l.classList.toggle('checked'); l.querySelector('input').checked=l.classList.contains('checked'); };
+      div.appendChild(l);
+    });
+    c.appendChild(div);
+  } else if(i===1){ // Plantao
+    if(we||fri){ c.innerHTML='<p style="color:var(--muted);font-family:\'DM Mono\',monospace;font-size:13px">Plantão alternado apenas Seg–Qui. Para Sex/Fim de semana use a aba "Escalado".</p>'; return; }
+    const cur=w.alt[date]||'';
+    const sel=document.createElement('select'); sel.className='form-select'; sel.id='dPla';
+    sel.innerHTML=`<option value="">— Ninguém —</option>`+members.map(m=>`<option value="${m.id}" ${cur===m.id?'selected':''}>${m.name}</option>`).join('');
+    c.appendChild(sel);
+  } else if(i===2){ // Escalado
+    const div=document.createElement('div'); div.className='checkbox-group'; div.id='dEsc';
+    members.forEach(m=>{
+      const l=document.createElement('label');
+      l.className='cb-item'+((day.escalado||[]).includes(m.id)?' checked':'');
+      l.dataset.id=m.id;
+      l.innerHTML=`<input type="checkbox" value="${m.id}" ${(day.escalado||[]).includes(m.id)?'checked':''}> ${m.name}`;
+      l.onclick=()=>{ l.classList.toggle('checked'); l.querySelector('input').checked=l.classList.contains('checked'); };
+      div.appendChild(l);
+    });
+    c.appendChild(div);
+  } else { // Nota
+    const inp=document.createElement('input');
+    inp.type='text'; inp.className='form-input'; inp.id='dNote';
+    inp.placeholder='ex: feriado, reunião, ajuste...';
+    inp.value=day.note||'';
+    c.appendChild(inp);
+  }
+}
+
+function saveDay(){
+  if(!editingDay) return;
+  const {weekId,date}=editingDay;
+  const w=weeks.find(x=>x.id===weekId); if(!w) return;
+  const day=w.days[date];
+  const we=isWeekend(date), fri=isFriday(date);
+
+  const dCom=$('dCom'), dPla=$('dPla'), dEsc=$('dEsc'), dNote=$('dNote');
+  if(dCom && !we) day.comercial=[...dCom.querySelectorAll('.checked')].map(e=>e.dataset.id);
+  if(dPla && !we && !fri) w.alt[date]=dPla.value;
+  if(dEsc) day.escalado=[...dEsc.querySelectorAll('.checked')].map(e=>e.dataset.id);
+  if(dNote) day.note=dNote.value;
+
+  save(); closeModal('day'); render(); showToast('✅ Dia atualizado!');
+}
+
+// ── MEMBERS MODAL ─────────────────────────────────────────────────────────
+function openMembersModal(){
+  tempMembers=members.map(m=>({...m}));
+  renderMembersList();
+  openModal('members');
+}
+
+function renderMembersList(){
+  const list=$('membersList'); list.innerHTML='';
+  tempMembers.forEach((m,i)=>{
+    const row=document.createElement('div'); row.className='member-row';
+    row.innerHTML=`
+      <input type="text" value="${m.name}" placeholder="Nome" oninput="tempMembers[${i}].name=this.value">
+      <input type="color" class="color-pick" value="${m.color}" oninput="tempMembers[${i}].color=this.value" title="Cor do avatar">
+      <button class="del-btn" onclick="removeTempMember(${i})" title="Remover">✕</button>`;
+    list.appendChild(row);
+  });
+}
+
+function addMember(){
+  tempMembers.push({id:uid(),name:'Novo Membro',color:'#E8610A'});
+  renderMembersList();
+}
+
+function removeTempMember(i){
+  tempMembers.splice(i,1);
+  renderMembersList();
+}
+
+function saveMembers(){
+  members=tempMembers.map(m=>({...m,name:m.name.trim()||'Sem nome'}));
+  save(); closeModal('members'); render(); showToast('✅ Membros atualizados!');
+}
+
+// ── DELETE ────────────────────────────────────────────────────────────────
+function deleteWeek(weekId){
+  if(!confirm('Excluir esta semana?')) return;
+  weeks=weeks.filter(w=>w.id!==weekId);
+  save(); render(); showToast('Semana removida.');
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────
+function render(){ renderStats(); renderWeeks(); }
+
+function renderStats(){
+  const bar=$('statsBar');
+  const filtered=weeks.filter(w=>{
+    const d=new Date(w.start+'T00:00:00');
+    return d.getFullYear()===curYear && d.getMonth()===curMonth;
+  });
+
+  const cnt={};
+  members.forEach(m=>cnt[m.id]=0);
+  filtered.forEach(w=>{
+    Object.values(w.days).forEach(day=>{
+      [...(day.comercial||[]),...(day.escalado||[])].forEach(id=>{ if(cnt[id]!==undefined) cnt[id]++; });
+    });
+    Object.values(w.alt||{}).forEach(id=>{ if(id&&cnt[id]!==undefined) cnt[id]++; });
+  });
+
+  const top=[...members].sort((a,b)=>cnt[b.id]-cnt[a.id])[0];
+  const totalDays=filtered.reduce((a,w)=>a+Object.keys(w.days).length,0);
+
+  bar.innerHTML=`
+    <div class="stat-card"><div class="stat-label">Semanas</div><div class="stat-value">${filtered.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Dias escalados</div><div class="stat-value">${totalDays}</div></div>
+    <div class="stat-card"><div class="stat-label">Membros</div><div class="stat-value">${members.length}</div></div>
+    <div class="stat-card"><div class="stat-label">Mais escalado</div><div class="stat-value" style="font-size:18px">${totalDays>0&&top?top.name:'—'}</div></div>`;
+}
+
+function renderWeeks(){
+  const container=$('weeksContainer');
+  const filtered=weeks.filter(w=>{
+    const d=new Date(w.start+'T00:00:00');
+    return d.getFullYear()===curYear && d.getMonth()===curMonth;
+  });
+
+  if(!filtered.length){
+    container.innerHTML=`<div class="no-weeks"><div class="no-icon">📅</div>Nenhuma semana escalada para <strong>${MONTHS_REAL[curMonth]} ${curYear}</strong>.<br><br>Clique em <strong>+ Semana</strong> para começar.</div>`;
+    return;
+  }
+  container.innerHTML='';
+  filtered.forEach(w=>container.appendChild(buildWeekCard(w)));
+}
+
+function buildWeekCard(week){
+  const allDates=dateRange(week.start,week.end);
+  const sec=document.createElement('div');
+  sec.className='week-section'+(week.collapsed?' collapsed':'');
+
+  // header
+  const hdr=document.createElement('div'); hdr.className='week-header';
+  hdr.innerHTML=`
+    <div class="week-title">
+      <span class="week-badge">Semana</span>
+      <h3>${fmt(week.start)} → ${fmt(week.end)}</h3>
+      <span class="week-dates">${allDates.length} dias${week.note?' · '+week.note:''}</span>
+    </div>
+    <div class="week-actions">
+      <button class="btn btn-outline" style="font-size:12px;padding:6px 12px" onclick="event.stopPropagation();openAltModal('${week.id}')">🔄 Alternância</button>
+      <button class="btn btn-outline" style="font-size:12px;padding:6px 12px" onclick="event.stopPropagation();openEditWeek('${week.id}')">✏️ Editar</button>
+      <button class="btn" style="font-size:12px;padding:6px 12px;background:#C04F06" onclick="event.stopPropagation();deleteWeek('${week.id}')">🗑</button>
+      <span class="week-toggle">▾</span>
+    </div>`;
+  hdr.addEventListener('click', ()=>{ week.collapsed=!week.collapsed; sec.classList.toggle('collapsed'); save(); });
+
+  const body=document.createElement('div'); body.className='week-body';
+
+  // days grid
+  const grid=document.createElement('div'); grid.className='days-grid';
+  allDates.forEach(d=>{
+    const day=week.days[d]||{};
+    const d_=dow(d), we=isWeekend(d), fri=isFriday(d);
+    const plantao=week.alt[d];
+
+    const card=document.createElement('div');
+    card.className='day-card'+(we?' weekend':'')+(isToday(d)?' today':'');
+    card.onclick=()=>openDayModal(week.id,d);
+
+    let tags='';
+    if(!we && day.comercial?.length)
+      tags+=`<div class="shift-tag tag-com">☀ ${day.comercial.map(id=>getMember(id).name.split(' ')[0]).join(', ')}</div>`;
+    if(!we && !fri && plantao)
+      tags+=`<div class="shift-tag tag-pla">🌙 ${getMember(plantao).name}</div>`;
+    if((fri||we) && day.escalado?.length)
+      tags+=`<div class="shift-tag tag-esc">⚡ ${day.escalado.map(id=>getMember(id).name.split(' ')[0]).join(', ')}</div>`;
+    if(!tags) tags=`<div class="shift-tag tag-fol">— folga</div>`;
+    if(day.note) tags+=`<div class="day-note">📝 ${day.note}</div>`;
+
+    card.innerHTML=`<div class="day-label">${DAYS_PT[d_]}</div><div class="day-number">${d.split('-')[2]}</div><div class="day-shifts">${tags}</div>`;
+    grid.appendChild(card);
+  });
+  body.appendChild(grid);
+
+  // summary blocks
+  const sg=document.createElement('div'); sg.className='summary-grid';
+  sg.appendChild(mkBlock('com','☀','Horário Comercial','Seg–Sex',week.comercial,()=>openAltModal(week.id)));
+  sg.appendChild(mkBlock('pla','🌙','Plantão Alternado','Seg–Qui',week.plantaoMembers,()=>openAltModal(week.id)));
+  sg.appendChild(mkBlock('esc','⚡','Plantão Escalado','Sex–Dom',week.escaladoMembers,null));
+  body.appendChild(sg);
+
+  sec.appendChild(hdr); sec.appendChild(body);
+  return sec;
+}
+
+function mkBlock(type,icon,title,sub,memberIds,onclick){
+  const block=document.createElement('div'); block.className='shift-block';
+  const chips=(memberIds||[]).map(id=>{
+    const m=getMember(id);
+    return `<div class="chip"><div class="chip-avatar" style="background:${m.color}22;color:${m.color}">${m.name.slice(0,2).toUpperCase()}</div>${m.name}</div>`;
+  }).join('');
+
+  block.innerHTML=`
+    <div class="shift-block-hdr">
+      <div class="shift-block-title">
+        <div class="shift-icon si-${type}">${icon}</div>
+        <div><h4>${title}</h4><p>${sub}</p></div>
+      </div>
+      ${onclick?`<button class="btn btn-outline" style="font-size:11px;padding:4px 10px" onclick="(${onclick.toString()})()">Editar</button>`:''}
+    </div>
+    <div class="member-chips">${chips||'<span style="color:var(--muted);font-size:13px;font-family:\'DM Mono\',monospace">Nenhum membro</span>'}</div>`;
+  return block;
+}
+
+// ── MONTH NAV ─────────────────────────────────────────────────────────────
+function changeMonth(delta){
+  curMonth+=delta;
+  if(curMonth>11){curMonth=0;curYear++;}
+  if(curMonth<0){curMonth=11;curYear--;}
+  $('monthLabel').textContent=`${MONTHS_REAL[curMonth]} ${curYear}`;
+  render();
+}
+
+// ── INIT ──────────────────────────────────────────────────────────────────
+function init(){
+  applyTheme();
+  $('monthLabel').textContent=`${MONTHS_REAL[curMonth]} ${curYear}`;
+  render();
+}
+
+init();
+</script>
+</body>
+</html>
